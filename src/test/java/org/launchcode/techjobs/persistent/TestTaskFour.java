@@ -193,28 +193,28 @@ public class TestTaskFour extends AbstractTest {
     /*
     * Verifies that ListController.list sets the correct model attributes using skill/employerRepository objects
     * */
-//    @Test
-//    public void testListControllerListMethodSetsFormFieldData (@Mocked Model model, @Mocked SkillRepository skillRepository, @Mocked EmployerRepository employerRepository) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
-//        Class listControllerClass = getClassByName("controllers.ListController");
-//        ListController listController = new ListController();
-//
-//        new Expectations() {{
-//            model.addAttribute("employers", any);
-//            model.addAttribute("skills", any);
-//            skillRepository.findAll();
-//            employerRepository.findAll();
-//        }};
-//
-//        Field skillRepositoryField = listControllerClass.getDeclaredField("skillRepository");
-//        skillRepositoryField.setAccessible(true);
-//        skillRepositoryField.set(listController, skillRepository);
-//
-//        Field employerRepositoryField = listControllerClass.getDeclaredField("employerRepository");
-//        employerRepositoryField.setAccessible(true);
-//        employerRepositoryField.set(listController, employerRepository);
-//
-//        listController.list(model);
-//    }
+    @Test
+    public void testListControllerListMethodSetsFormFieldData (@Mocked Model model, @Mocked SkillRepository skillRepository, @Mocked EmployerRepository employerRepository) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
+        Class listControllerClass = getClassByName("controllers.ListController");
+        ListController listController = new ListController();
+
+        new Expectations() {{
+            model.addAttribute("employers", any);
+            model.addAttribute("skills", any);
+            skillRepository.findAll();
+            employerRepository.findAll();
+        }};
+
+        Field skillRepositoryField = listControllerClass.getDeclaredField("skillRepository");
+        skillRepositoryField.setAccessible(true);
+        skillRepositoryField.set(listController, skillRepository);
+
+        Field employerRepositoryField = listControllerClass.getDeclaredField("employerRepository");
+        employerRepositoryField.setAccessible(true);
+        employerRepositoryField.set(listController, employerRepository);
+
+        listController.list(model);
+    }
 
     @Test
     public void testSqlQuery () throws IOException {
