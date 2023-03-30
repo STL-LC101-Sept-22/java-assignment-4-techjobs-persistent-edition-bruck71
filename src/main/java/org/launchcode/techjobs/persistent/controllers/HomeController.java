@@ -55,20 +55,33 @@ public class HomeController {
     public String processAddJobForm(@ModelAttribute @Valid Job newJob,
                                        Errors errors, Model model,
                                     @RequestParam int employerId,
-                                    @RequestParam List<Integer> skills) {
+                                    @RequestParam (required = false) List<Integer> skills) {
 
-//        Optional<Employer> result = employerRepository.findById(employerId);
-//        Employer employers = result.get();
+        Optional<Employer> result = employerRepository.findById(employerId);
+        //Use for the error handling
+        List<Employer> optEmployers = (List<Employer>) employerRepository.findAll();
+        List<Skill> optSkills = (List<Skill>) skillRepository.findAll();
         if (errors.hasErrors()) {
             //Employer employers = (Employer) employerRepository.findById(employerId);
             model.addAttribute("title", "Add Job");
-            //model.addAttribute("employers", emplo)
+            model.addAttribute("employers", optEmployers);
+            model.addAttribute("skills", optSkills);
 
             return "add";
-        } else {
+        }
+        else {
             if (skills != null) {
                 List<Skill> selectedSkills = (List<Skill>) skillRepository.findAllById(skills);
                 newJob.setSkills(selectedSkills);
+            } else {
+                return "add";
+            } if (employerId == 0) {
+                return "add";
+            } else {
+                if (result.isPresent()) {
+                    Employer employer = result.get();
+                    newJob.setEmployer(employer);
+                }
             }
         }
         //employerRepository.save(employer);
@@ -79,9 +92,11 @@ public class HomeController {
 
     @GetMapping("view/{jobId}")
     public String displayViewJob(Model model, @PathVariable int jobId) {
-        Optional <Job> optJob = jobRepository.findById(jobId);
+//        Optional <Job> optJob = jobRepository.findById(jobId);
+        Optional optJob = jobRepository.findById(jobId); //This is built like the Employer Controller's View
         if (optJob.isPresent()) {
-            Job job = optJob.get();
+//            Job job = optJob.get();
+            Job job = (Job) optJob.get(); //This is built like the Employer Controller's View
             model.addAttribute("job", job);
             return "view";
         } else {
