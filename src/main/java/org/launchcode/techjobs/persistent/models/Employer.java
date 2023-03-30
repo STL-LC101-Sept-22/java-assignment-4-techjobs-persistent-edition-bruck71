@@ -1,5 +1,6 @@
 package org.launchcode.techjobs.persistent.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -17,7 +18,7 @@ public class Employer extends AbstractEntity {
 
     @OneToMany //(mappedBy = "employer")
     @JoinColumn(name = "employer_id")
-    private List<Job> jobs = new ArrayList<>();
+    private final List<Job> jobs = new ArrayList<>();
 
     public Employer(String location) {
         this.location = location;
