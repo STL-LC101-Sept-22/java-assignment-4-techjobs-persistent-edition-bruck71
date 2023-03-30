@@ -1,6 +1,7 @@
 package org.launchcode.techjobs.persistent.models;
 
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
@@ -10,7 +11,7 @@ import java.util.Objects;
 @MappedSuperclass
 public abstract class AbstractEntity {
     @Id
-    @GeneratedValue //(strategy = GenerationType.IDENTITY)  //Use this if getting weird ID nums
+    @GeneratedValue (strategy = GenerationType.IDENTITY)  //Use this if getting weird ID nums
     private int id;
 
     @NotBlank(message = "Please enter job name.")
